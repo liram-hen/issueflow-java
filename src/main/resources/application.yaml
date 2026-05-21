@@ -1,0 +1,38 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: issueflow
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:issueflow}
+    username: ${DB_USERNAME:issueflow}
+    password: ${DB_PASSWORD:issueflow}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: ${JPA_SHOW_SQL:false}
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:update}
+    open-in-view: false
+  sql:
+    init:
+      mode: never
+  docker:
+    compose:
+      enabled: ${SPRING_DOCKER_COMPOSE_ENABLED:true}
+      file: compose.yml
+      lifecycle-management: start-only
+  servlet:
+    multipart:
+      max-file-size: ${MAX_FILE_SIZE:10MB}
+      max-request-size: ${MAX_REQUEST_SIZE:10MB}
+
+issueflow:
+  jwt:
+    secret: ${JWT_SECRET:issueflow-development-secret-key-change-me-32-chars-minimum}
+    expires-in-seconds: ${JWT_EXPIRES_IN_SECONDS:3600}
+  bootstrap:
+    admin-username: ${BOOTSTRAP_ADMIN_USERNAME:admin}
+    admin-password: ${BOOTSTRAP_ADMIN_PASSWORD:admin}
+    admin-email: ${BOOTSTRAP_ADMIN_EMAIL:admin@issueflow.local}
