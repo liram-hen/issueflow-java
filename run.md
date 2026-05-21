@@ -17,7 +17,19 @@ java -version
 
 The major version reported must be `21` or `25`.
 
+
+## 0. Fast launch
 ---
+Simplest way is to have Docker Desktop installed and running, then run
+On macOS / Linux:
+```bash
+./mvnw spring-boot:run
+```
+
+On Windows PowerShell:
+```powershell
+.\mvnw.cmd spring-boot:run
+```
 
 ## 1. Start the Database
 
@@ -110,20 +122,21 @@ Windows PowerShell:
 
 Without Docker (Option B), set env vars first:
 
+Each export/$env:NAME="value" line sets an environment variable for the current session only.
 ```bash
 # macOS / Linux
-export SPRING_DOCKER_COMPOSE_ENABLED=false
-export DB_USERNAME=postgres
-export DB_PASSWORD=postgres
-./mvnw spring-boot:run
+export SPRING_DOCKER_COMPOSE_ENABLED=false # tell Spring Boot NOT to auto-start docker compose
+export DB_USERNAME=postgres # username for the local Postgres install
+export DB_PASSWORD=postgres # matching password
+./mvnw spring-boot:run # launch the app
 ```
 
 ```powershell
 # Windows PowerShell
-$env:SPRING_DOCKER_COMPOSE_ENABLED="false"
-$env:DB_USERNAME="postgres"
-$env:DB_PASSWORD="postgres"
-.\mvnw.cmd spring-boot:run
+$env:SPRING_DOCKER_COMPOSE_ENABLED="false"   # tell Spring Boot NOT to auto-start docker compose
+$env:DB_USERNAME="postgres"                  # username for the local Postgres install
+$env:DB_PASSWORD="postgres"                  # matching password
+.\mvnw.cmd spring-boot:run                   # launch the app
 ```
 
 Or run the packaged JAR directly:
@@ -132,9 +145,6 @@ Or run the packaged JAR directly:
 java -jar target/issueflow-*.jar
 ```
 
-The API is available at `http://localhost:8080` (override with `SERVER_PORT`).
-
-> **JWT secret:** The default development secret is set in `application.yaml`. Override it in production with `JWT_SECRET` (minimum 32 characters).
 
 ---
 
